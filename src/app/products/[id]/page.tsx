@@ -32,12 +32,13 @@ export default async function ProductPage({
       <div className="grid md:grid-cols-2 gap-8 mt-4">
         {/* Billede sektion */}
         <div className="bg-gray-100 rounded-lg p-8 flex items-center justify-center">
-          <div className="text-center">
-            <div className="w-64 h-80 bg-gray-300 rounded-lg flex items-center justify-center mb-4">
-              <span className="text-gray-500">Billede placeholder</span>
+            <div className="text-center">
+                <img 
+                src={card.image} 
+                alt={card.name}
+                className="w-64 h-auto rounded-lg shadow-lg"
+                />
             </div>
-            <p className="text-sm text-gray-600">{card.image}</p>
-          </div>
         </div>
 
         {/* Info sektion */}
@@ -69,7 +70,7 @@ export default async function ProductPage({
           <p className="text-gray-700 mb-6">{card.description}</p>
 
           <AddToCartButton card={card} />
-          
+
         </div>
       </div>
     </main>
