@@ -1,6 +1,7 @@
 import { pokemonCards } from '@/data/cards';
 import { notFound } from 'next/navigation';
 import Link from 'next/link';
+import AddToCartButton from '@/components/AddToCartButton';
 
 // Dette genererer statiske sider for alle kort ved build time (SSG)
 export async function generateStaticParams() {
@@ -67,12 +68,8 @@ export default async function ProductPage({
 
           <p className="text-gray-700 mb-6">{card.description}</p>
 
-          <button 
-            className="bg-blue-600 text-white px-6 py-3 rounded-lg font-semibold hover:bg-blue-700 disabled:bg-gray-400 disabled:cursor-not-allowed"
-            disabled={!card.inStock}
-          >
-            {card.inStock ? 'Tilføj til kurv' : 'Udsolgt'}
-          </button>
+          <AddToCartButton card={card} />
+          
         </div>
       </div>
     </main>

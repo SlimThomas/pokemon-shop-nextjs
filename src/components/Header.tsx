@@ -1,6 +1,11 @@
+'use client';
+
 import Link from 'next/link';
+import { useCart } from '@/context/CartContext';
 
 export default function Header() {
+  const { totalItems } = useCart();
+
   return (
     <header className="bg-blue-600 text-white">
       <nav className="container mx-auto px-4 py-4 flex justify-between items-center">
@@ -15,7 +20,7 @@ export default function Header() {
             Kort
           </Link>
           <Link href="/cart" className="hover:underline">
-            Kurv (0)
+            Kurv ({totalItems})
           </Link>
         </div>
       </nav>
