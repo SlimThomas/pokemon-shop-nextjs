@@ -1,4 +1,5 @@
 import { pokemonCards } from '@/data/cards';
+import Link from 'next/link';
 
 export default function Home() {
   return (
@@ -8,7 +9,11 @@ export default function Home() {
       
       <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
         {pokemonCards.map((card) => (
-          <div key={card.id} className="border rounded-lg p-4 hover:shadow-lg transition">
+          <Link 
+            key={card.id} 
+            href={`/products/${card.id}`}
+            className="border rounded-lg p-4 hover:shadow-lg transition cursor-pointer"
+          >
             <h2 className="text-xl font-bold">{card.name}</h2>
             <p className="text-gray-600">{card.set}</p>
             <p className="text-lg font-semibold mt-2">{card.price} kr</p>
@@ -16,7 +21,7 @@ export default function Home() {
             {!card.inStock && (
               <p className="text-red-500 text-sm mt-2">Udsolgt</p>
             )}
-          </div>
+          </Link>
         ))}
       </div>
     </main>
