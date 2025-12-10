@@ -3,6 +3,12 @@
 import { useCart } from '@/context/CartContext';
 import { useState } from 'react';
 import { useRouter } from 'next/navigation';
+import { Metadata } from 'next';
+
+export const metadata: Metadata = {
+  title: "Checkout",
+  description: "Gennemfør din bestilling af Pokémon kort",
+};
 
 export default function CheckoutPage() {
   const { items, totalPrice, clearCart } = useCart();

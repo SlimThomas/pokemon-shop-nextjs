@@ -2,6 +2,8 @@ import { pokemonCards } from '@/data/cards';
 import { notFound } from 'next/navigation';
 import Link from 'next/link';
 import AddToCartButton from '@/components/AddToCartButton';
+import { Metadata } from 'next';
+import Image from 'next/image';
 
 // Dette genererer statiske sider for alle kort ved build time (SSG)
 export async function generateStaticParams() {
@@ -9,6 +11,32 @@ export async function generateStaticParams() {
     id: card.id,
   }));
 }
+
+export async function generateMetadata({ 
+  params 
+}: { 
+  params: Promise<{ id: string }> 
+}): Promise<Metadata> {
+  const { id } = await params;
+  const card = pokemonCards.find((c) => c.id === id);
+
+  if (!card) {
+    return {
+      title: "Kort ikke fundet",
+    };
+  }
+
+  return {
+    title: `${card.name} - ${card.set}`,
+    description: `${card.description} Køb ${card.name} fra ${card.set}. ${card.condition}. ${card.inStock ? 'På lager nu' : 'Udsolgt'} - ${card.price} kr.`,
+    openGraph: {
+      title: `${card.name} - PokéShop`,
+      description: card.description,
+      images: [card.image],
+    },
+  };
+}
+
 
 // Tilføj async og await params
 export default async function ProductPage({ 
@@ -33,10 +61,13 @@ export default async function ProductPage({
         {/* Billede sektion */}
         <div className="bg-gray-100 rounded-lg p-8 flex items-center justify-center">
             <div className="text-center">
-                <img 
-                src={card.image} 
-                alt={card.name}
-                className="w-64 h-auto rounded-lg shadow-lg"
+                <Image 
+                  src={card.image} 
+                  alt={card.name}
+                  width={300}
+                  height={420}
+                  className="w-64 h-auto rounded-lg shadow-lg"
+                  unoptimized={true}
                 />
             </div>
         </div>

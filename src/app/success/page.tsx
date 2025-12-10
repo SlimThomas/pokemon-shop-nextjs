@@ -1,6 +1,12 @@
 'use client';
 
 import Link from 'next/link';
+import { Metadata } from 'next';
+
+export const metadata: Metadata = {
+  title: "Bestilling modtaget",
+  description: "Tak for din bestilling! Vi vender tilbage hurtigst muligt.",
+};
 
 export default function SuccessPage() {
   return (

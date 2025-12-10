@@ -5,6 +5,7 @@ import Header from "@/components/Header";
 import Footer from "@/components/Footer";
 import { CartProvider } from "@/context/CartContext";
 
+
 const geistSans = Geist({
   variable: "--font-geist-sans",
   subsets: ["latin"],
@@ -16,8 +17,23 @@ const geistMono = Geist_Mono({
 });
 
 export const metadata: Metadata = {
-  title: "PokéShop - Pokémon Kort Handel",
-  description: "Køb Pokémon kort fra min personlige samling",
+  title: {
+    default: "PokéShop - Køb Pokémon Kort Online",
+    template: "%s | PokéShop"
+  },
+  description: "Køb autentiske Pokémon kort fra vores personlige samling. Base Set, Holo Rare og mere. Hurtig levering og sikker betaling.",
+  keywords: ["pokémon kort", "pokemon cards", "køb pokemon kort", "base set", "charizard", "trading cards"],
+  authors: [{ name: "Thomas" }],
+  openGraph: {
+    title: "PokéShop - Køb Pokémon Kort Online",
+    description: "Køb autentiske Pokémon kort fra vores personlige samling",
+    type: "website",
+    locale: "da_DK",
+  },
+  robots: {
+    index: true,
+    follow: true,
+  },
 };
 
 export default function RootLayout({

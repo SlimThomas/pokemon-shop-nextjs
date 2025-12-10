@@ -2,6 +2,13 @@
 
 import { useCart } from '@/context/CartContext';
 import Link from 'next/link';
+import { Metadata } from 'next';
+import Image from 'next/image';
+
+export const metadata: Metadata = {
+  title: "Din Kurv",
+  description: "Se dine valgte Pokémon kort og gå til checkout",
+};
 
 export default function CartPage() {
   const { items, removeFromCart, addToCart, totalPrice, clearCart } = useCart();
@@ -34,10 +41,13 @@ export default function CartPage() {
               className="border rounded-lg p-4 flex gap-4"
             >
               {/* Billede */}
-              <img 
+              <Image 
                 src={item.image} 
                 alt={item.name}
+                width={96}
+                height={128}
                 className="w-24 h-32 object-contain"
+                unoptimized={true}
               />
 
               {/* Info */}

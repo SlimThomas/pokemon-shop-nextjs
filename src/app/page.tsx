@@ -1,5 +1,12 @@
 import { pokemonCards } from '@/data/cards';
 import Link from 'next/link';
+import { Metadata } from 'next';
+import Image from 'next/image';
+
+export const metadata: Metadata = {
+  title: "Forside - Se alle Pokémon kort",
+  description: "Gennemse vores samling af sjældne Pokémon kort. Base Set, Jungle, og mere. Charizard, Blastoise, Pikachu og andre populære kort.",
+};
 
 export default function Home() {
   return (
@@ -15,10 +22,13 @@ export default function Home() {
       className="border rounded-lg overflow-hidden hover:shadow-lg transition cursor-pointer"
     >
       <div className="aspect-[3/4] bg-gray-100 flex items-center justify-center">
-        <img 
+        <Image 
           src={card.image} 
           alt={card.name}
+          width={300}
+          height={420}
           className="w-full h-full object-contain p-4"
+          unoptimized={true}
         />
       </div>
       <div className="p-4">
