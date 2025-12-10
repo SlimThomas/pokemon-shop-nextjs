@@ -36,38 +36,44 @@ export default function CheckoutPage() {
   }
 
   const handleSubmit = async (e: React.FormEvent) => {
-    e.preventDefault();
-    setIsSubmitting(true);
-    
-    try {
-      const response = await fetch('/api/send-order', {
-        method: 'POST',
-        headers: {
-          'Content-Type': 'application/json',
-        },
-        body: JSON.stringify({
-          name: formData.name,
-          email: formData.email,
-          phone: formData.phone,
-          message: formData.message,
-          items: items,
-          totalPrice: totalPrice,
-        }),
-      });
+  e.preventDefault();
+  setIsSubmitting(true);
+  
+  try {
+    const response = await fetch('/api/send-order', {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json',
+      },
+      body: JSON.stringify({
+        name: formData.name,
+        email: formData.email,
+        phone: formData.phone,
+        message: formData.message,
+        items: items,
+        totalPrice: totalPrice,
+      }),
+    });
 
-      if (response.ok) {
-        clearCart();
-        router.push('/success');
-      } else {
-        alert('Der skete en fejl. Prøv igen.');
-        setIsSubmitting(false);
+    const result = await response.json(); // Parse JSON først
+
+    if (response.ok) {
+      if (result.demo) {
+        alert('✅ Demo mode: Bestilling registreret (men ingen email sendt)');
       }
-    } catch (error) {
-      console.error('Error:', error);
+      
+      clearCart();
+      router.push('/success');
+    } else {
       alert('Der skete en fejl. Prøv igen.');
       setIsSubmitting(false);
     }
-  };
+  } catch (error) {
+    console.error('Error:', error);
+    alert('Der skete en fejl. Prøv igen.');
+    setIsSubmitting(false);
+  }
+};
 
   const handleChange = (e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>) => {
     setFormData({

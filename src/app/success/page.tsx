@@ -3,6 +3,8 @@
 import Link from 'next/link';
 
 export default function SuccessPage() {
+  const isDemoMode = process.env.NEXT_PUBLIC_DEMO_MODE === 'true';
+
   return (
     <main className="min-h-screen bg-gradient-to-b from-blue-50 to-white py-16">
       <div className="container mx-auto px-4">
@@ -12,11 +14,24 @@ export default function SuccessPage() {
             <h1 className="text-5xl font-bold text-[#3b4cca] mb-6">
               Tak for din bestilling!
             </h1>
+
+            {isDemoMode && (
+              <div className="bg-yellow-100 border-2 border-yellow-400 rounded-xl p-4 mb-6">
+                <p className="text-yellow-800 font-semibold">
+                  🎭 Demo Mode - Ingen email blev sendt
+                </p>
+              </div>
+            )}
+
             <div className="bg-gradient-to-r from-green-50 to-blue-50 rounded-xl p-6 mb-8 border-2 border-green-200">
               <p className="text-lg text-gray-700">
-                Din bestilling er modtaget og sendt til os. Vi vender tilbage på din email hurtigst muligt! 📧
+                {isDemoMode 
+                  ? 'Din bestilling er registreret i demo mode. I den rigtige version ville du modtage en email bekræftelse! 📧'
+                  : 'Din bestilling er modtaget og sendt til os. Vi vender tilbage på din email hurtigst muligt! 📧'
+                }
               </p>
             </div>
+
             <div className="space-y-4">
               <Link 
                 href="/"
@@ -25,7 +40,10 @@ export default function SuccessPage() {
                 🏠 Tilbage til forsiden
               </Link>
               <p className="text-sm text-gray-500 mt-4">
-                Du modtager en bekræftelse inden for 24 timer
+                {isDemoMode 
+                  ? 'Demo mode aktiv - ingen rigtige emails sendes'
+                  : 'Du modtager en bekræftelse inden for 24 timer'
+                }
               </p>
             </div>
           </div>

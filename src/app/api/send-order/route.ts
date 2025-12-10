@@ -2,15 +2,22 @@ import { Resend } from 'resend';
 import { NextResponse } from 'next/server';
 
 const resend = new Resend(process.env.RESEND_API_KEY);
+const isDemoMode = process.env.NEXT_PUBLIC_DEMO_MODE === 'true';
 
 export async function POST(request: Request) {
   try {
     const body = await request.json();
     const { name, email, phone, message, items, totalPrice } = body;
 
-    // Log for debugging
-    console.log('API Key exists:', !!process.env.RESEND_API_KEY);
-    console.log('Sending email to:', 'thommangor@gmail.com');
+    // I demo mode, simuler success uden at sende email
+    if (isDemoMode) {
+      console.log('DEMO MODE: Order would be sent:', { name, email, totalPrice });
+      return NextResponse.json({ 
+        success: true, 
+        demo: true,
+        message: 'Demo mode - ingen email sendt' 
+      });
+    }
 
     const cartItems = items
       .map((item: any) => 
@@ -20,7 +27,7 @@ export async function POST(request: Request) {
 
     const { data, error } = await resend.emails.send({
       from: 'PokéShop <onboarding@resend.dev>',
-      to: ['thommangor@gmail.com'], // Ændr til din rigtige email!
+      to: ['thommangor@gmail.com'],
       subject: `Ny Pokémon kort bestilling fra ${name}`,
       text: `
 Ny bestilling modtaget!
