@@ -36,44 +36,44 @@ export default function CheckoutPage() {
   }
 
   const handleSubmit = async (e: React.FormEvent) => {
-  e.preventDefault();
-  setIsSubmitting(true);
-  
-  try {
-    const response = await fetch('/api/send-order', {
-      method: 'POST',
-      headers: {
-        'Content-Type': 'application/json',
-      },
-      body: JSON.stringify({
-        name: formData.name,
-        email: formData.email,
-        phone: formData.phone,
-        message: formData.message,
-        items: items,
-        totalPrice: totalPrice,
-      }),
-    });
+    e.preventDefault();
+    setIsSubmitting(true);
+    
+    try {
+      const response = await fetch('/api/send-order', {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify({
+          name: formData.name,
+          email: formData.email,
+          phone: formData.phone,
+          message: formData.message,
+          items: items,
+          totalPrice: totalPrice,
+        }),
+      });
 
-    const result = await response.json(); // Parse JSON først
+      const result = await response.json();
 
-    if (response.ok) {
-      if (result.demo) {
-        alert('✅ Demo mode: Bestilling registreret (men ingen email sendt)');
+      if (response.ok) {
+        if (result.demo) {
+          alert('✅ Demo mode: Bestilling registreret (men ingen email sendt)');
+        }
+        
+        clearCart();
+        router.push('/success');
+      } else {
+        alert('Der skete en fejl. Prøv igen.');
+        setIsSubmitting(false);
       }
-      
-      clearCart();
-      router.push('/success');
-    } else {
+    } catch (error) {
+      console.error('Error:', error);
       alert('Der skete en fejl. Prøv igen.');
       setIsSubmitting(false);
     }
-  } catch (error) {
-    console.error('Error:', error);
-    alert('Der skete en fejl. Prøv igen.');
-    setIsSubmitting(false);
-  }
-};
+  };
 
   const handleChange = (e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>) => {
     setFormData({
@@ -103,7 +103,7 @@ export default function CheckoutPage() {
                   required
                   value={formData.name}
                   onChange={handleChange}
-                  className="w-full border-2 border-gray-300 rounded-xl px-4 py-3 focus:outline-none focus:ring-2 focus:ring-[#3b4cca] focus:border-transparent transition"
+                  className="w-full border-2 border-gray-300 rounded-xl px-4 py-3 focus:outline-none focus:ring-2 focus:ring-[#3b4cca] focus:border-transparent transition placeholder:text-gray-600 text-gray-900"
                   placeholder="Dit fulde navn"
                 />
               </div>
@@ -118,7 +118,7 @@ export default function CheckoutPage() {
                   required
                   value={formData.email}
                   onChange={handleChange}
-                  className="w-full border-2 border-gray-300 rounded-xl px-4 py-3 focus:outline-none focus:ring-2 focus:ring-[#3b4cca] focus:border-transparent transition"
+                  className="w-full border-2 border-gray-300 rounded-xl px-4 py-3 focus:outline-none focus:ring-2 focus:ring-[#3b4cca] focus:border-transparent transition placeholder:text-gray-600 text-gray-900"
                   placeholder="din@email.dk"
                 />
               </div>
@@ -132,7 +132,7 @@ export default function CheckoutPage() {
                   name="phone"
                   value={formData.phone}
                   onChange={handleChange}
-                  className="w-full border-2 border-gray-300 rounded-xl px-4 py-3 focus:outline-none focus:ring-2 focus:ring-[#3b4cca] focus:border-transparent transition"
+                  className="w-full border-2 border-gray-300 rounded-xl px-4 py-3 focus:outline-none focus:ring-2 focus:ring-[#3b4cca] focus:border-transparent transition placeholder:text-gray-600 text-gray-900"
                   placeholder="+45 12 34 56 78"
                 />
               </div>
@@ -146,7 +146,7 @@ export default function CheckoutPage() {
                   value={formData.message}
                   onChange={handleChange}
                   rows={4}
-                  className="w-full border-2 border-gray-300 rounded-xl px-4 py-3 focus:outline-none focus:ring-2 focus:ring-[#3b4cca] focus:border-transparent transition"
+                  className="w-full border-2 border-gray-300 rounded-xl px-4 py-3 focus:outline-none focus:ring-2 focus:ring-[#3b4cca] focus:border-transparent transition placeholder:text-gray-600 text-gray-900"
                   placeholder="Evt. spørgsmål eller ønsker..."
                 />
               </div>
