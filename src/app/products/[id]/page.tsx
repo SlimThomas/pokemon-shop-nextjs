@@ -51,9 +51,85 @@ export default async function ProductPage({
     notFound();
   }
 
+  // Structured Data (JSON-LD) for SEO - Google Rich Results
+  const productSchema = {
+    "@context": "https://schema.org",
+    "@type": "Product",
+    "name": card.name,
+    "description": card.description,
+    "image": card.image,
+    "brand": {
+      "@type": "Brand",
+      "name": "Pokémon"
+    },
+    "offers": {
+      "@type": "Offer",
+      "price": card.price,
+      "priceCurrency": "DKK",
+      "availability": card.inStock 
+        ? "https://schema.org/InStock" 
+        : "https://schema.org/OutOfStock",
+      "itemCondition": "https://schema.org/UsedCondition",
+      "url": `https://pokemon-shop-nextjs.vercel.app/products/${card.id}`,
+      "seller": {
+        "@type": "Organization",
+        "name": "PokéTrade"
+      }
+    },
+    "category": "Trading Cards",
+    "additionalProperty": [
+      {
+        "@type": "PropertyValue",
+        "name": "Set",
+        "value": card.set
+      },
+      {
+        "@type": "PropertyValue",
+        "name": "Rarity",
+        "value": card.rarity
+      },
+      {
+        "@type": "PropertyValue",
+        "name": "Condition",
+        "value": card.condition
+      }
+    ]
+  };
+
+  // BreadcrumbList Schema for navigation
+  const breadcrumbSchema = {
+    "@context": "https://schema.org",
+    "@type": "BreadcrumbList",
+    "itemListElement": [
+      {
+        "@type": "ListItem",
+        "position": 1,
+        "name": "Hjem",
+        "item": "https://pokemon-shop-nextjs.vercel.app"
+      },
+      {
+        "@type": "ListItem",
+        "position": 2,
+        "name": card.name,
+        "item": `https://pokemon-shop-nextjs.vercel.app/products/${card.id}`
+      }
+    ]
+  };
+
   return (
-    <main className="min-h-screen bg-gradient-to-b from-blue-50 to-white py-8">
-      <div className="container mx-auto px-4">
+    <>
+      {/* JSON-LD Structured Data */}
+      <script
+        type="application/ld+json"
+        dangerouslySetInnerHTML={{ __html: JSON.stringify(productSchema) }}
+      />
+      <script
+        type="application/ld+json"
+        dangerouslySetInnerHTML={{ __html: JSON.stringify(breadcrumbSchema) }}
+      />
+      
+      <main className="min-h-screen bg-gradient-to-b from-blue-50 to-white py-8">
+        <div className="container mx-auto px-4">
         <Link 
           href="/" 
           className="inline-flex items-center text-[#3b4cca] hover:text-[#2563eb] font-semibold mb-6 transition"
@@ -67,11 +143,11 @@ export default async function ProductPage({
             <div className="bg-gradient-to-b from-gray-100 to-gray-200 rounded-xl p-8 flex items-center justify-center">
               <Image 
                 src={card.image} 
-                alt={card.name}
+                alt={`${card.name} pokémon kort fra ${card.set} - ${card.rarity} i ${card.condition} tilstand`}
                 width={400}
                 height={560}
                 className="w-full max-w-md h-auto rounded-lg shadow-2xl"
-                unoptimized={true}
+                priority
               />
             </div>
 
@@ -115,5 +191,6 @@ export default async function ProductPage({
         </div>
       </div>
     </main>
+    </>
   );
 }

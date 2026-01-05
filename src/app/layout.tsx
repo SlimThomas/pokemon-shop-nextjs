@@ -41,8 +41,43 @@ export default function RootLayout({
 }: Readonly<{
   children: React.ReactNode;
 }>) {
+  // Organization Schema for SEO
+  const organizationSchema = {
+    "@context": "https://schema.org",
+    "@type": "Organization",
+    "name": "PokéTrade",
+    "description": "Køb autentiske Pokémon kort fra vores personlige samling",
+    "url": "https://pokemon-shop-nextjs.vercel.app",
+    "logo": "https://pokemon-shop-nextjs.vercel.app/favicon.ico",
+    "contactPoint": {
+      "@type": "ContactPoint",
+      "contactType": "Customer Service",
+      "availableLanguage": ["Danish"]
+    }
+  };
+
+  // WebSite Schema for SEO
+  const websiteSchema = {
+    "@context": "https://schema.org",
+    "@type": "WebSite",
+    "name": "PokéTrade",
+    "description": "Køb autentiske Pokémon kort fra vores personlige samling",
+    "url": "https://pokemon-shop-nextjs.vercel.app"
+  };
+
   return (
     <html lang="da">
+      <head>
+        {/* JSON-LD Structured Data */}
+        <script
+          type="application/ld+json"
+          dangerouslySetInnerHTML={{ __html: JSON.stringify(organizationSchema) }}
+        />
+        <script
+          type="application/ld+json"
+          dangerouslySetInnerHTML={{ __html: JSON.stringify(websiteSchema) }}
+        />
+      </head>
       <body className={`${geistSans.variable} ${geistMono.variable} antialiased flex flex-col min-h-screen`}>
         <CartProvider>
           <Header />

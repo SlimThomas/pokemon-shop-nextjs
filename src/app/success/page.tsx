@@ -29,6 +29,8 @@ export default function SuccessPage() {
                   ? 'Din bestilling er registreret i demo mode. I den rigtige version ville du modtage en email bekræftelse! 📧'
                   : 'Din bestilling er modtaget og sendt til os. Vi vender tilbage på din email hurtigst muligt! 📧'
                 }
+
+                
               </p>
             </div>
 

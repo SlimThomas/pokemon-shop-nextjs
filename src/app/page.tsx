@@ -40,11 +40,11 @@ export default function Home() {
               <div className="aspect-[3/4] bg-gradient-to-b from-gray-100 to-gray-200 flex items-center justify-center p-4">
                 <Image 
                   src={card.image} 
-                  alt={card.name}
+                  alt={`${card.name} - ${card.set} ${card.rarity} pokémon kort i ${card.condition} tilstand`}
                   width={300}
                   height={420}
                   className="w-full h-full object-contain drop-shadow-xl"
-                  unoptimized={true}
+                  loading="lazy"
                 />
               </div>
               <div className="p-4 bg-gradient-to-b from-white to-gray-50">
